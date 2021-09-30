@@ -6,7 +6,7 @@ const MODIFICAR_EMAIL = 'aluno/MODIFICAR_EMAIL'
 
 // ESTADO INICIAL
 const inicialState = {
-    nome = 'Thállen Kettyllen',
+    nome: 'Thállen Kettyllen',
     email: 'thallen@email.com',
     diasRestantes: 120
 }
@@ -14,21 +14,21 @@ const inicialState = {
 //ACTIONS
 export const incrementar = () => ({type: INCREMENTAR});
 export const reduzir = () => ({type: REDUZIR});
-export const modidicarEmail = (payload) => ({type: MODIFICAR_EMAIL, payload});
+export const modificarEmail = (payload) => ({type: MODIFICAR_EMAIL, payload});
 
 // Reducer
- const aluno = immer.producer((state = inicialState, action) => {
+ const reducer = immer.produce((state, action) => {
     switch(action.type){
         case INCREMENTAR: 
-        state.diasRestantes + 1
+        state.diasRestantes++
         break
         case REDUZIR: 
-        state.diasRestantes - 1
+        state.diasRestantes--
         break
         case MODIFICAR_EMAIL: 
         state.email = action.payload
         break
     }
-})
+}, inicialState)
 
-export default aluno
+export default reducer

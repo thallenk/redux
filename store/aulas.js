@@ -28,23 +28,24 @@ const initialState = [
     },
   ];
 //ACTIONS
-export const completar_aula = () => ({type: COMPLETAR_AULA, payload});
-export const completar_curso = () => ({type: COMPLETAR_CURSO});
-export const resetar_curso = (payload) => ({type: RESETAR_CURSO});
+export const completarAula = (payload) => ({type: COMPLETAR_AULA, payload});
+export const completarCurso = () => ({type: COMPLETAR_CURSO});
+export const resetarCurso = () => ({type: RESETAR_CURSO});
 
 // Reducer
- const aulas = immer.producer((state = initialState, action) => {
+ const reducer = immer.produce((state, action) => {
     switch(action.type){
         case COMPLETAR_AULA: 
-            state.filter(s => s.id === s.payload).completa = true
+        const index = state.findIndex((x) => x.id === action.payload);
+        if (!isNaN(index) && state[index]) state[index].completa = true;
         break
-        case COMPLETAR_AULA: 
+        case COMPLETAR_CURSO: 
             state.map(s => s.completa = true)
         break
         case RESETAR_CURSO: 
             state.map(s => s.completa = false)
         break
     }
-})
+}, initialState)
 
-export default aulas
+export default reducer
