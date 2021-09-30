@@ -1,7 +1,7 @@
-import aluno from './aluno.js'
-import aulas from './aulas.js'
+import token from './token.js'
+import user from './user.js'
 
-const reducer = Redux.combineReducers({aluno, aulas })
+const reducer = Redux.combineReducers({ token, user })
 
 const store = Redux.createStore(
     reducer,
