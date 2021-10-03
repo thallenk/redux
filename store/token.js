@@ -18,7 +18,7 @@ export const fetchError = (payload) => ({type: FETCH_ERROR, payload});
 
 
 
-//middlewares
+
 export const tokenFetch = (user) => async(dispatch) => {
     try {
         dispatch(fetchStarted());

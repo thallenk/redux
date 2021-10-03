@@ -20,7 +20,7 @@ export const fetchStarted = () => ({type: FETCH_STARTED});
 export const fetchSuccess = (payload) => ({type:FETCH_SUCCESS, payload});
 export const fetchError = (payload) => ({type: FETCH_ERROR, payload});
 
-//middlewares
+
 export const userFetch = (token) => async(dispatch) => {
   try {
       dispatch(fetchStarted());

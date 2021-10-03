@@ -9,38 +9,8 @@
     <script src='./redux.min.js'></script>
 </head> 
 <body>
-    <h1 id='aulas'></h1>
-    <h1 id='aluno'></h1>
 
-    <script type='module'>
-        //importando store e actions
-        import store from './store/configureStore.js';
-        import { incrementar, reduzir, modificarEmail } from './store/aluno.js';
-        import { completarAula, completarCurso, resetarCurso } from './store/aulas.js';
-
-        //render
-        function render() {
-            //trazendo os reducers
-            const { aluno, aulas } = store.getState()
-            console.log(aluno)
-            console.log(aulas)
-            const aulasEl = document.getElementById('aulas');
-            const alunoEl = document.getElementById('aluno');
-
-            //inserido informação 
-            alunoEl.innerText = `${aluno.nome} : ${aluno.email} : ${aluno.diasRestantes}`;
-            aulasEl.innerText = aulas.filter((aula) => aula.completa === true).length;
-        }
-        render();
-        store.subscribe(render);
-
-        store.dispatch(incrementar());
-        store.dispatch(reduzir());
-        store.dispatch(modificarEmail('joao@origamid.com'));
-        store.dispatch(completarAula(2));
-        //store.dispatch(resetarCurso());
-        store.dispatch(completarCurso());
-
-    </script>
+    <script src="./script.js" type="module"></script>
 </body>
+  
 </html>

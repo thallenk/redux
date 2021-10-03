@@ -1,11 +1,12 @@
+const { createStore, combineReducers, compose, applyMiddleware } = Redux;
+import thunk from './middleware/thunk.js';
+import localStorage from './middleware/localStorage.js';
 import token from './token.js'
 import user from './user.js'
 
-const reducer = Redux.combineReducers({ token, user })
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const enhancer = composeEnhancers( applyMiddleware(thunk, localStorage));
+const reducer = combineReducers({token, user})
+const store = createStore(reducer, enhancer)
 
-const store = Redux.createStore(
-    reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
-    
-export default store;
+export default store
