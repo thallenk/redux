@@ -42,18 +42,17 @@ export const tokenFetch = (user) => async(dispatch) => {
 
 
 // Reducer
- const token = immer.produce((state, action) => {
-    switch(action.type){
-        case FETCH_STARTED: 
-            state.loading = true
-        break
-        case FETCH_SUCCESS: 
-            state.data = action.payload, state.loading = false, state.error = null
-        break
-        case FETCH_ERROR: 
-        state.data = null, state.loading = false, state.error = action.payload
-        break
+function token(state = initialState, action) {
+    switch (action.type) {
+      case TOKEN_FETCH_STARTED:
+        return { ...state, loading: true };
+      case TOKEN_FETCH_SUCCESS:
+        return { data: action.payload, loading: false, error: null };
+      case TOKEN_FETCH_ERROR:
+        return { data: null, loading: false, error: action.payload };
+      default:
+        return state;
     }
-}, inicialState)
+  }
 
 export default token

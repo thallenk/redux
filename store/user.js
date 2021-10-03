@@ -42,18 +42,17 @@ export const userFetch = (token) => async(dispatch) => {
 };
 
 //Reducer
-const user = immer.produce((state, action) => {
-  switch(action.type){
-      case FETCH_STARTED: 
-          state.loading = true
-      break
-      case FETCH_SUCCESS: 
-          state.data = action.payload, state.loading = false, state.error = null
-      break
-      case FETCH_ERROR: 
-      state.data = null, state.loading = false, state.error = action.payload
-      break
+function user(state = initialState, action) {
+  switch (action.type) {
+    case USER_FETCH_STARTED:
+      return { ...state, loading: true };
+    case USER_FETCH_SUCCESS:
+      return { data: action.payload, loading: false, error: null };
+    case USER_FETCH_ERROR:
+      return { data: null, loading: false, error: action.payload };
+    default:
+      return state;
   }
-}, inicialState)
+}
 
 export default user
