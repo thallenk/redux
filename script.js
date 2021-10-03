@@ -1,6 +1,6 @@
 import store from './store/configureStore.js'
-import { tokenFetch  } from './store/token'
-import { userFetch } from './store/user'
+import { tokenFetch  } from './store/token.js'
+import { userFetch } from './store/user.js'
 
 
 async function login(user) {

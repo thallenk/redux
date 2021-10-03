@@ -1,3 +1,5 @@
+import getLocalStorage from "./utils/getLocalStorage.js"
+
 //INCIALIZANDO CONSTANTES
 const FETCH_STARTED = 'token/FETCH_STARTED'
 const FETCH_SUCCESS = 'token/FETCH_SUCCESS'
@@ -42,13 +44,13 @@ export const tokenFetch = (user) => async(dispatch) => {
 
 
 // Reducer
-function token(state = initialState, action) {
+function token(state = inicialState, action) {
     switch (action.type) {
-      case TOKEN_FETCH_STARTED:
+      case FETCH_STARTED:
         return { ...state, loading: true };
-      case TOKEN_FETCH_SUCCESS:
+      case FETCH_SUCCESS:
         return { data: action.payload, loading: false, error: null };
-      case TOKEN_FETCH_ERROR:
+      case FETCH_ERROR:
         return { data: null, loading: false, error: action.payload };
       default:
         return state;
