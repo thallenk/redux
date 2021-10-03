@@ -4,28 +4,42 @@ const FETCH_SUCCESS = 'token/FETCH_SUCCESS'
 const FETCH_ERROR = 'token/FETCH_ERROR'
 
 
-
-//middlewares
-function getLocalStorage(key, inicial){
-    try{
-        return JSON.parse(window.localStorage.getItem(key))
-    } catch (error) {
-        return inicial
-    }
-}
-
-
 // ESTADO INICIAL
 const inicialState = {
     loading: false,
-    data: getLocalStorage('data', null),
+    data: getLocalStorage('token', null),
     error: null
 }
 
 //ACTIONS
 export const fetchStarted = () => ({type: FETCH_STARTED});
-export const fetchSuccess = () => ({type:FETCH_SUCCESS});
-export const fetchError = (payload) => ({type: FETCH_ERROR});
+export const fetchSuccess = (payload) => ({type:FETCH_SUCCESS, payload, localStorage:'token'});
+export const fetchError = (payload) => ({type: FETCH_ERROR, payload});
+
+
+
+//middlewares
+export const tokenFetch = (user) => async(dispatch) => {
+    try {
+        dispatch(fetchStarted());
+        const response = await fetch(
+            'https://dogsapi.origamid.dev/json/jwt-auth/v1/token',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(user),
+            },
+        );
+        const { token } = await response.json();
+        dispatch(fetchSuccess(token));
+    } catch(error){
+        dispatch(fetchError(error.message))
+    }
+};
+
+
 
 // Reducer
  const token = immer.produce((state, action) => {

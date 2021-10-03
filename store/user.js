@@ -5,16 +5,10 @@ const FETCH_ERROR = 'user/FETCH_ERROR'
 
 
 //middlewares
-function getLocalStorage(key, inicial){
-  try{
-      return JSON.parse(window.localStorage.getItem(key))
-  } catch (error) {
-      return inicial
-  }
-}
 
 
-// ESTADO INICIAL
+
+//ESTADO INICIAL
 const inicialState = {
   loading: false,
   data: getLocalStorage('data', null),
@@ -23,10 +17,31 @@ const inicialState = {
 
 //ACTIONS
 export const fetchStarted = () => ({type: FETCH_STARTED});
-export const fetchSuccess = () => ({type:FETCH_SUCCESS});
-export const fetchError = (payload) => ({type: FETCH_ERROR});
+export const fetchSuccess = (payload) => ({type:FETCH_SUCCESS, payload});
+export const fetchError = (payload) => ({type: FETCH_ERROR, payload});
 
-// Reducer
+//middlewares
+export const userFetch = (token) => async(dispatch) => {
+  try {
+      dispatch(fetchStarted());
+      const response = await fetch(
+          'https://dogsapi.origamid.dev/json/jwt-auth/v1/token',
+          {
+            method: 'GET',
+            headers: {
+              Authorization: 'Bearer' + token,
+            },
+            body: JSON.stringify(user),
+          },
+      );
+      const { data } = await response.json();
+      dispatch(fetchSuccess(data));
+  } catch(error){
+      dispatch(fetchError(error.message))
+  }
+};
+
+//Reducer
 const user = immer.produce((state, action) => {
   switch(action.type){
       case FETCH_STARTED: 
